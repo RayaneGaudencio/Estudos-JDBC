@@ -1,6 +1,7 @@
 package br.com.loja;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,9 +12,10 @@ public class TestaInsercao {
 		ConnectionFactory factory = new ConnectionFactory();
 		Connection connection = factory.recuperarConexao();
 		
-		Statement stm = connection.createStatement();
-		stm.execute("INSERT INTO PRODUTO (NOME, PRECO) VALUES ('MOUSE', 99)"
-				, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (NOME, PRECO) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+		stm.setString(1, "FONES DE OUVIDO");
+		stm.setDouble(2, 200);
+		stm.execute();
 
 		ResultSet rst = stm.getGeneratedKeys();
 		
