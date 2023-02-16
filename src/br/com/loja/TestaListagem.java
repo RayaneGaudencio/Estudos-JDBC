@@ -1,9 +1,9 @@
 package br.com.loja;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class TestaListagem {
 	public static void main(String[] args) throws SQLException {
@@ -11,8 +11,8 @@ public class TestaListagem {
 			ConnectionFactory conexao = new ConnectionFactory();
 			Connection connection = conexao.recuperarConexao();
 		
-			Statement stm = connection.createStatement();
-			stm.execute("SELECT NOME, PRECO, ID FROM PRODUTO");
+			PreparedStatement stm = connection.prepareStatement("SELECT NOME, PRECO, ID FROM PRODUTO");
+			stm.execute();
 			
 			ResultSet rst = stm.getResultSet();
 			
