@@ -10,24 +10,23 @@ public class TestaInsercaoComParametro {
 		public static void main(String[] args) throws SQLException {
 		
 			ConnectionFactory factory = new ConnectionFactory();
-			Connection connection = factory.recuperarConexao();
+			try(Connection connection = factory.recuperarConexao();) {
+			
 			connection.setAutoCommit(false); // não permite fazer o autoCommit
 			
-			try {
-				PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (NOME, PRECO) VALUES (?, ?)" , Statement.RETURN_GENERATED_KEYS);
+			try (PreparedStatement stm = 
+					connection.prepareStatement("INSERT INTO PRODUTO (NOME, PRECO) VALUES (?, ?)" , Statement.RETURN_GENERATED_KEYS);) {
 				
-				adicionarVariavel("Teclado", 300, stm);
-				adicionarVariavel("fones", 200, stm);
-				
-				connection.commit(); // responsável por commitar caso a transação dê certo
-				
-				connection.close();
-				
-				stm.close();				
+					adicionarVariavel("Teclado", 300, stm);
+					adicionarVariavel("fones", 200, stm);
+					
+					connection.commit(); // responsável por commitar caso a transação dê certo
+					
 			} catch(Exception e) { // a exception nesse caso é utilizada caso para fazer o rollback, não permitindo inconsistência 
 				e.printStackTrace();
 				System.out.println("Rollback executado.");
 				connection.rollback();
+			}
 			}
 		}
 
@@ -40,12 +39,13 @@ public class TestaInsercaoComParametro {
 			if(nome.equals("fones")) {
 				throw new RuntimeException("Não foi possível adicionar o produto.");
 			}
-			ResultSet rst = stm.getGeneratedKeys();
-			while(rst.next()) {
-				int id = rst.getInt(1);
-				System.out.println("O id criado foi " + id);
+			
+			try(ResultSet rst = stm.getGeneratedKeys();) {
+				while(rst.next()) {
+					int id = rst.getInt(1);
+					System.out.println("O id criado foi " + id);
+				}				
 			}
-			rst.close();;
 		}
 }
 
