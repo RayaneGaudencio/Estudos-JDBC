@@ -1,4 +1,5 @@
-package modelo;
+package br.com.loja.produto;
+
 
 public class Produto {
 	
