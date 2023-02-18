@@ -7,7 +7,7 @@ public class TestaPoolConexoes {
 		
 		ConnectionFactory connectionFactory = new ConnectionFactory();
 		
-		for(int i = 0; i < 200; i++) {
+		for(int i = 0; i < 20; i++) {
 			connectionFactory.recuperarConexao();
 			System.out.println("Conexão de número " + i);
 		}
