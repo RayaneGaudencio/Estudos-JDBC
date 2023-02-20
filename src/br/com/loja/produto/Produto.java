@@ -12,6 +12,13 @@ public class Produto {
 		this.preco = preco;
 	}
 	
+	public Produto(int id, String nome, double preco) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.preco = preco;
+	}
+	
 	public String getNome() {
 		return nome;
 	}

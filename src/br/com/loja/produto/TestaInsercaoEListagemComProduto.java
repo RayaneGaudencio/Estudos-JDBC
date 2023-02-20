@@ -15,9 +15,10 @@ public class TestaInsercaoEListagemComProduto {
 		
 		try(Connection connection = new ConnectionFactory().recuperarConexao()) {
 			ProdutoDAO produtoDAO = new ProdutoDAO(connection);
-			produtoDAO.salvarProduto(tablet);
-			produtoDAO.salvarProduto(notebook);
 			
+		 	produtoDAO.salvarProduto(tablet); 
+		 	produtoDAO.salvarProduto(notebook);
+			 		
 			List<Produto> listaDeProdutos = produtoDAO.listar();
 			listaDeProdutos.stream().forEach(lp -> System.out.println(lp));
 		}

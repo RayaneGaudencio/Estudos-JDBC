@@ -39,6 +39,14 @@ public class ProdutoDAO {
 		
 		try(PreparedStatement pstm = connection.prepareStatement(sql)) {
 			pstm.execute();
+			
+			try(ResultSet rst = pstm.getResultSet()) {
+				while(rst.next()) {
+					Produto produto = new Produto(rst.getInt(1), rst.getString(2), rst.getDouble(3));
+					
+					produtos.add(produto);
+				}
+			}
 		}
 		
 		return produtos;
