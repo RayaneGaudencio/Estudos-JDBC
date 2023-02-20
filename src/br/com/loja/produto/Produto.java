@@ -1,6 +1,5 @@
 package br.com.loja.produto;
 
-
 public class Produto {
 	
 	private Integer id;
@@ -12,7 +11,7 @@ public class Produto {
 		this.nome = nome;
 		this.preco = preco;
 	}
-
+	
 	public String getNome() {
 		return nome;
 	}
@@ -24,14 +23,10 @@ public class Produto {
 	public Integer getId() {
 		return id;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 	
 	@Override
 	public String toString() {
-		return String.format("O produto criado foi: %s no valor de R$%.2f.",
+		return String.format("O produto é: %s no valor de R$%.2f.",
 				this.nome, 
 				this.preco);
 	}
