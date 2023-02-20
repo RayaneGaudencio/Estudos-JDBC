@@ -8,8 +8,11 @@ public class TestaConexao {
 	public static void main(String[] args) throws SQLException {
 		
 		ConnectionFactory conexao = new ConnectionFactory();
-		Connection connection = conexao.recuperarConexao();
 		
-		connection.close();
+		try(Connection connection = conexao.recuperarConexao();){
+			System.out.println("Acessando conexão...");
+		} catch (Exception e) {
+			System.out.println("Não foi possível recuperar a conexão.");
+		}
 	}
 }
