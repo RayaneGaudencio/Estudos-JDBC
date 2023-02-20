@@ -12,16 +12,16 @@ public class TestaInsercao {
 		ConnectionFactory factory = new ConnectionFactory();
 		Connection connection = factory.recuperarConexao();
 		
-		PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (NOME, PRECO) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
-		stm.setString(1, "FONES DE OUVIDO");
-		stm.setDouble(2, 200);
-		stm.execute();
-
-		ResultSet rst = stm.getGeneratedKeys();
-		
-		while(rst.next()) {
-			int id = rst.getInt(1);
-			System.out.println("O id criado foi " + id);
+		try(PreparedStatement stm = connection.prepareStatement("INSERT INTO PRODUTO (NOME, PRECO) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);) {
+			stm.setString(1, "FONES DE OUVIDO");
+			stm.setDouble(2, 200);
+			stm.execute();
+			try(ResultSet rst = stm.getGeneratedKeys();) {
+				while(rst.next()) {
+					int id = rst.getInt(1);
+					System.out.println("O id criado foi " + id);
+				}				
+			}
 		}
 	}
 }

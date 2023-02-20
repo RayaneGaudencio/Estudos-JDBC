@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.loja.ConnectionFactory;
 
@@ -25,12 +27,26 @@ public class ProdutoDAO {
 				stm.setDouble(2, produto.getPreco());
 				
 				stm.execute();
-				try(ResultSet rst = stm.getGeneratedKeys()) {
-					while(rst.next()) {
-						produto.setId(rst.getInt(1));
-					}
-				}
+
 				System.out.println(produto.toString());
 			}
+		}
+	
+	public List<Produto> listar() throws SQLException {
+		List<Produto> produtos = new ArrayList<>();
+		
+		String sql = "SELECT * FROM PRODUTO";
+		
+		try(PreparedStatement pstm = connection.prepareStatement(sql)) {
+			pstm.execute();
+			
+			try(ResultSet rst = pstm.getResultSet()) {
+				while(rst.next()) {
+					Produto produto = new Produto(rst.getString(1), rst.getDouble(2));
+					produtos.add(produto);
+				}
+			}
+		}
+		return produtos;
 		}
 }
