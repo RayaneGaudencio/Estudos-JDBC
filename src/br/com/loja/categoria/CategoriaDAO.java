@@ -24,11 +24,9 @@ public class CategoriaDAO {
 		 ResultSet rst = pstm.getResultSet();
 		 
 		 while(rst.next()) {
-			 int id = rst.getInt("id");
-			 System.out.println(id);
+			 Categoria categoria = new Categoria(rst.getString(2));
 			 
-			 String nome = rst.getString("nome");
-			 System.out.println(nome);
+			 categorias.add(categoria);
 		 }
 		return categorias;
 	}
