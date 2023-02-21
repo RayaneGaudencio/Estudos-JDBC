@@ -1,10 +1,7 @@
 package br.com.loja.categoria;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.loja.ConnectionFactory;
@@ -18,7 +15,7 @@ public class TestaListagemCategoria {
 		try (Connection connection = new ConnectionFactory().recuperarConexao()) {
 			
 			ProdutoDAO produtoDAO = new ProdutoDAO(connection);
-			List<Produto> produtos = produtoDAO.buscarProdutoPorCategoria();
+			List<Produto> produtos = produtoDAO.listarProdutosECategorias();
 			
 			produtos.stream().forEach(p -> System.out.println(p.getNome() + " - " + p.getCategoria().getNome()));
 		}
