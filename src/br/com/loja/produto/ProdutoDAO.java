@@ -53,7 +53,7 @@ public class ProdutoDAO {
 		return produtos;
 		}
 	
-	public List<Produto> buscarProdutoPorCategoria() throws SQLException {
+	public List<Produto> listarProdutosECategorias() throws SQLException {
 		List <Produto> produtosECategorias = new ArrayList<>();
 		String sql = "SELECT p.nome, p.preco, p.id, c.id, c.nome FROM produto p INNER JOIN categoria c WHERE p.categoria_id = c.id";
 		
