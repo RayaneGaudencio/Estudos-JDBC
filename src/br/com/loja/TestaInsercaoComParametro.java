@@ -15,10 +15,10 @@ public class TestaInsercaoComParametro {
 			connection.setAutoCommit(false); // não permite fazer o autoCommit
 			
 			try (PreparedStatement stm = 
-					connection.prepareStatement("INSERT INTO PRODUTO (NOME, PRECO) VALUES (?, ?)" , Statement.RETURN_GENERATED_KEYS);) {
+					connection.prepareStatement("INSERT INTO PRODUTO (NOME, PRECO, CATEGORIA_ID) VALUES (?, ?, ?)" , Statement.RETURN_GENERATED_KEYS);) {
 				
-					adicionarVariavel("Teclado", 300, stm);
-					adicionarVariavel("fones", 200, stm);
+					adicionarVariavel("Teclado", 300, 1, stm);
+					adicionarVariavel("Fogão", 1000, 2, stm);
 					
 					connection.commit(); // responsável por commitar caso a transação dê certo
 					
@@ -30,10 +30,11 @@ public class TestaInsercaoComParametro {
 			}
 		}
 
-		private static void adicionarVariavel(String nome, double preco, PreparedStatement stm)
+		private static void adicionarVariavel(String nome, double preco, int idCategoria, PreparedStatement stm)
 				throws SQLException {
 			stm.setString(1, nome);
 			stm.setDouble(2, preco);		
+			stm.setInt(3, idCategoria);
 			stm.execute();
 			
 			if(nome.equals("fones")) {
